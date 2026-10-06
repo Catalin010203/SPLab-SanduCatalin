@@ -3,6 +3,7 @@ import java.util.List;
 public class Paragraph implements Element {
 
     private String text;
+    private AlignStrategy textAlignment;
 
     public Paragraph(String text) {
         this.text = text;
@@ -23,6 +24,17 @@ public class Paragraph implements Element {
 
     @Override
     public void print() {
-        System.out.println("Paragraph: " + text);
+        Context context = new Context(text);
+
+        if(textAlignment != null) {
+            textAlignment.render(this, context);
+        } else {
+            System.out.println("Paragraph: " + text);
+        }
+
+    }
+
+    public void setAlignStrategy (AlignStrategy strategy) {
+        this.textAlignment = strategy;
     }
 }

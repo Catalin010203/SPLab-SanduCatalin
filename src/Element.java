@@ -1,8 +1,8 @@
 public interface Element {
 
-    public abstract void print();
-    public abstract void add(Element element);
-    public abstract void remove(Element element);
-    public abstract Element get(int index);
+    void print();
+    void add(Element element);
+    void remove(Element element);
+    Element get(int index);
 
 }
