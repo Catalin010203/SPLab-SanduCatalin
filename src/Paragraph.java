@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Paragraph extends Element {
+public class Paragraph implements Element {
 
     private String text;
 

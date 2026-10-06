@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Section extends Element {
+public class Section implements Element {
 
     private String title;
     private List<Element> children = new ArrayList<>();

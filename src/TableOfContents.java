@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class TableOfContents extends Element {
+public class TableOfContents implements Element {
 
     private String something;
 

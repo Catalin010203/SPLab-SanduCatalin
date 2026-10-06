@@ -1,4 +1,4 @@
-public abstract class Element {
+public interface Element {
 
     public abstract void print();
     public abstract void add(Element element);
