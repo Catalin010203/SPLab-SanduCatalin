@@ -1,55 +1,38 @@
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
-        long startTime = System.currentTimeMillis();
+        Book myBook = new Book("Playboy");
 
-        ImageProxy img1 = new ImageProxy("Pamela Anderson");
-        ImageProxy img2 = new ImageProxy("Kim Kardashian");
-        ImageProxy img3 = new ImageProxy("Kirby Griffin");
+        Author author = new Author("Radu", "Pavel Gheorghe");
+        myBook.addAuthor(author);
 
-        Section playboyS1 = new Section("Front Cover");
-        playboyS1.add(img1);
+        Section section1 = new Section("Front Cover");
+        section1.add(new Paragraph("Introduction"));
+        section1.add(new ImageProxy("Pamela Anderson"));
 
-        Section playboyS2 = new Section("Summer Girls");
-        playboyS2.add(img2);
-        playboyS2.add(img3);
+        Section section2 = new Section("Summer Girls");
+        section2.add(new Paragraph("Chapter introduction"));
+        section2.add(new ImageProxy("Kim Kardashian"));
+        section2.add(new Table("Statistics table"));
 
-        Book playboy = new Book("Playboy");
+        myBook.addContent(section1);
+        myBook.addContent(section2);
 
-        playboy.addContent(playboyS1);
-        playboy.addContent(playboyS2);
+        myBook.accept(new RenderContentVisitor());
 
-        long endTime = System.currentTimeMillis();
+        System.out.println();
 
-        System.out.println(
-                "Creation of the content took "
-                        + (endTime - startTime)
-                        + " milliseconds"
-        );
+        BookStatistics statistics = new BookStatistics();
+        myBook.accept(statistics);
+        statistics.printStatistics();
 
-        startTime = System.currentTimeMillis();
+        System.out.println();
 
-        playboyS1.print();
+        GenerateToC generateToC = new GenerateToC();
+        myBook.accept(generateToC);
 
-        endTime = System.currentTimeMillis();
-
-        System.out.println(
-                "Printing of the section 1 took "
-                        + (endTime - startTime)
-                        + " milliseconds"
-        );
-
-        startTime = System.currentTimeMillis();
-
-        playboyS1.print();
-
-        endTime = System.currentTimeMillis();
-
-        System.out.println(
-                "Printing again the section 1 took "
-                        + (endTime - startTime)
-                        + " milliseconds"
-        );
+        System.out.println("Table of Contents:");
+        System.out.println(generateToC.getToC().getAttributes());
     }
 }

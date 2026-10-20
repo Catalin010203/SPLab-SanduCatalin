@@ -1,26 +1,32 @@
 public class Table implements Element {
 
-    private String something;
+    private String attributes;
 
-    public Table(String something) {
-        this.something = something;
+    public Table(String attributes) {
+        this.attributes = attributes;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
     public void add(Element element) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void remove(Element element) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Element get(int index) {
-        return null;
-    }
-
-    @Override
-    public void print() {
-        System.out.println("Table: " + something);
+        throw new UnsupportedOperationException();
     }
 }

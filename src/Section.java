@@ -10,6 +10,19 @@ public class Section implements Element {
         this.title = title;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public List<Element> getChildren() {
+        return children;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
     @Override
     public void add(Element element) {
         children.add(element);
@@ -23,13 +36,5 @@ public class Section implements Element {
     @Override
     public Element get(int index) {
         return children.get(index);
-    }
-
-    @Override
-    public void print() {
-        System.out.println("Section: " + title);
-        for(Element element : children) {
-            element.print();
-        }
     }
 }

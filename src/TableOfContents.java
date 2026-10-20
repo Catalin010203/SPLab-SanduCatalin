@@ -1,28 +1,36 @@
-import java.util.List;
-
 public class TableOfContents implements Element {
 
-    private String something;
+    private String attributes;
 
-    public TableOfContents(String something) {
-        this.something = something;
+    public TableOfContents() {
+        this.attributes = "";
+    }
+
+    public TableOfContents(String attributes) {
+        this.attributes = attributes;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
     public void add(Element element) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void remove(Element element) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Element get(int index) {
-        return null;
-    }
-
-    @Override
-    public void print() {
-        System.out.println("Table of contents: " + something);
+        throw new UnsupportedOperationException();
     }
 }

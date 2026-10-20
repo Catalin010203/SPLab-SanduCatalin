@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Paragraph implements Element {
 
     private String text;
@@ -9,32 +7,41 @@ public class Paragraph implements Element {
         this.text = text;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setAlignStrategy(AlignStrategy strategy) {
+        this.textAlignment = strategy;
+    }
+
+    public AlignStrategy getAlignStrategy() {
+        return textAlignment;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
     @Override
     public void add(Element element) {
+        throw new UnsupportedOperationException(
+                "Paragraph cannot contain elements"
+        );
     }
 
     @Override
     public void remove(Element element) {
+        throw new UnsupportedOperationException(
+                "Paragraph cannot contain elements"
+        );
     }
 
     @Override
     public Element get(int index) {
-        return null;
-    }
-
-    @Override
-    public void print() {
-        Context context = new Context(text);
-
-        if(textAlignment != null) {
-            textAlignment.render(this, context);
-        } else {
-            System.out.println("Paragraph: " + text);
-        }
-
-    }
-
-    public void setAlignStrategy (AlignStrategy strategy) {
-        this.textAlignment = strategy;
+        throw new UnsupportedOperationException(
+                "Paragraph has no children"
+        );
     }
 }

@@ -2,7 +2,6 @@ public class ImageProxy implements Element, Picture {
 
     private String url;
     private Dimension dimension;
-
     private Image realImage;
 
     public ImageProxy(String url) {
@@ -11,7 +10,6 @@ public class ImageProxy implements Element, Picture {
     }
 
     private Image loadImage() {
-
         if (realImage == null) {
             realImage = new Image(url);
         }
@@ -19,9 +17,13 @@ public class ImageProxy implements Element, Picture {
         return realImage;
     }
 
+    public Image getRealImage() {
+        return loadImage();
+    }
+
     @Override
-    public void print() {
-        loadImage().print();
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -41,14 +43,16 @@ public class ImageProxy implements Element, Picture {
 
     @Override
     public void add(Element element) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void remove(Element element) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Element get(int index) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }
