@@ -1,0 +1,11 @@
+package ro.uvt.composite;
+
+public interface Element {
+
+    void add(Element element);
+    void remove(Element element);
+    void accept(Visitor visitor);
+    Element get(int index);
+
+
+}

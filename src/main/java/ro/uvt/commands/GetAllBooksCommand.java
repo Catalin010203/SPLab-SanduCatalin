@@ -1,20 +1,19 @@
+
 package ro.uvt.commands;
 
 import ro.uvt.Models.Book;
-import ro.uvt.Services.BookService;
-
 import java.util.List;
 
 public class GetAllBooksCommand implements Command<List<Book>> {
-    private final BookService bookService;
 
-    public GetAllBooksCommand(BookService bookService) {
-        this.bookService = bookService;
+    private final CommandContext context;
+
+    public GetAllBooksCommand(CommandContext context) {
+        this.context = context;
     }
 
     @Override
     public List<Book> execute() {
-        return bookService.findAll();
+        return context.getBooksRepository().findAll();
     }
-
 }

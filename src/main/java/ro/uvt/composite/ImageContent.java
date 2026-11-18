@@ -1,0 +1,24 @@
+package ro.uvt.composite;
+
+import jakarta.persistence.Embeddable;
+
+@Embeddable
+public class ImageContent {
+
+    private String content;
+
+    public ImageContent() {
+    }
+
+    public ImageContent(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+}

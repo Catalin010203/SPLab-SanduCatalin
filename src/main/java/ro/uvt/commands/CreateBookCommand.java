@@ -1,19 +1,21 @@
+
 package ro.uvt.commands;
 
 import ro.uvt.Models.Book;
-import ro.uvt.Services.BookService;
 
 public class CreateBookCommand implements Command<Book> {
-    private final BookService bookService;
+
+    private final CommandContext context;
     private final Book book;
 
-    public CreateBookCommand(BookService bookService, Book book) {
-        this.bookService = bookService;
+    public CreateBookCommand(CommandContext context, Book book) {
+        this.context = context;
         this.book = book;
     }
 
     @Override
     public Book execute() {
-        return bookService.create(book);
+        book.setId(null);
+        return context.getBooksRepository().save(book);
     }
 }

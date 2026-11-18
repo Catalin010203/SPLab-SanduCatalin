@@ -1,12 +1,24 @@
+
 package ro.uvt.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String author;
 
     public Book() {
-
     }
 
     public Book(Long id, String title, String author) {

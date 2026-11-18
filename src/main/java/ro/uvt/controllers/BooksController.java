@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.uvt.commands.*;
 import ro.uvt.Models.Book;
 import ro.uvt.Services.BookService;
+import ro.uvt.persistence.BooksRepositoryAdapter;
 import ro.uvt.execution.AsyncRequestService;
 import ro.uvt.execution.CommandExecutor;
 
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequestMapping("/books")
 public class BooksController {
 
+    private final CommandContext commandContext;
     private final BookService booksService;
     private final AsyncRequestService asyncRequestService;
     private final CommandExecutor commandExecutor;
@@ -25,24 +27,26 @@ public class BooksController {
     public BooksController(
             BookService booksService,
             AsyncRequestService asyncRequestService,
-            CommandExecutor commandExecutor
+            CommandExecutor commandExecutor,
+            BooksRepositoryAdapter booksRepositoryAdapter
     ) {
         this.booksService = booksService;
         this.asyncRequestService = asyncRequestService;
         this.commandExecutor = commandExecutor;
+        this.commandContext = new CommandContext(booksRepositoryAdapter);
     }
 
     @GetMapping
     public List<Book> getAllBooks() {
         return commandExecutor.executeSync(
-                new GetAllBooksCommand(booksService)
+                new GetAllBooksCommand(commandContext)
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Book book = commandExecutor.executeSync(
-                new GetBookByIdCommand(booksService, id)
+                new GetBookByIdCommand(commandContext, id)
         );
 
         if (book == null) {
@@ -57,7 +61,7 @@ public class BooksController {
             @RequestBody Book book
     ) {
         String requestId = asyncRequestService.submit(
-                new CreateBookCommand(booksService, book)
+                new CreateBookCommand(commandContext, book)
         );
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
@@ -74,7 +78,7 @@ public class BooksController {
             @RequestBody Book book
     ) {
         Book updatedBook = commandExecutor.executeSync(
-                new UpdateBookCommand(book, booksService, id)
+                new UpdateBookCommand(book, commandContext, id)
         );
 
         if (updatedBook == null) {
@@ -87,7 +91,7 @@ public class BooksController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         boolean deleted = commandExecutor.executeSync(
-                new DeleteBookCommand(booksService, id)
+                new DeleteBookCommand(commandContext, id)
         );
 
         if (!deleted) {
